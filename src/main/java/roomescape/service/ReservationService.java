@@ -34,12 +34,10 @@ public class ReservationService {
     }
 
     public List<Reservation> find(String name, int page, int size) {
-        if (name == null) {
+        if (name == null || name.isBlank()) {
             return reservationDao.findAll(page, size);
         }
-        if (name.isBlank()) {
-            throw new DomainValidationException("예약자 이름은 필수입니다.");
-        }
+
         return reservationDao.findByName(name, page, size);
     }
 
