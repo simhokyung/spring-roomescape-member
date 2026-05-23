@@ -9,16 +9,13 @@ import roomescape.exception.PastReservationException;
 
 @Getter
 public class Reservation {
-    private static final int MIN_NAME_LENGTH = 2;
-    private static final int MAX_NAME_LENGTH = 10;
-
     private final Long id;
-    private final String name;
+    private final ReservationName name;
     private final LocalDate date;
     private final ReservationTime time;
     private final Theme theme;
 
-    private Reservation(Long id, String name, LocalDate date, ReservationTime time, Theme theme) {
+    private Reservation(Long id, ReservationName name, LocalDate date, ReservationTime time, Theme theme) {
         validateRequired(name, date, time, theme);
 
         this.id = id;
@@ -31,13 +28,13 @@ public class Reservation {
     public static Reservation create(String name, LocalDate date, ReservationTime time, Theme theme, LocalDateTime now) {
         validateNow(now);
 
-        Reservation reservation = new Reservation(null, name, date, time, theme);
+        Reservation reservation = new Reservation(null, new ReservationName(name), date, time, theme);
         reservation.validateCreatableDateTime(now);
         return reservation;
     }
 
     public static Reservation restore(Long id, String name, LocalDate date, ReservationTime time, Theme theme) {
-        return new Reservation(id, name, date, time, theme);
+        return new Reservation(id, new ReservationName(name), date, time, theme);
     }
 
     public Reservation updateDateAndTime(LocalDate date, ReservationTime time, LocalDateTime now) {
@@ -52,6 +49,10 @@ public class Reservation {
         return updatedReservation;
     }
 
+    public String getName() {
+        return name.getValue();
+    }
+
     public Long getTimeId() {
         return time.getId();
     }
@@ -64,7 +65,7 @@ public class Reservation {
         return time.isPast(date, now);
     }
 
-    private static void validateRequired(String name, LocalDate date, ReservationTime time, Theme theme) {
+    private static void validateRequired(ReservationName name, LocalDate date, ReservationTime time, Theme theme) {
         validateName(name);
         validateDate(date);
         validateTime(time);
@@ -83,13 +84,9 @@ public class Reservation {
         }
     }
 
-    private static void validateName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new InvalidInputException("이름 형식은 " + MIN_NAME_LENGTH + "글자 이상 " + MAX_NAME_LENGTH + "글자 이하입니다.");
-        }
-
-        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new InvalidInputException("이름 형식은 " + MIN_NAME_LENGTH + "글자 이상 " + MAX_NAME_LENGTH + "글자 이하입니다.");
+    private static void validateName(ReservationName name) {
+        if (name == null) {
+            throw new InvalidInputException("예약자 이름은 필수입니다.");
         }
     }
 
