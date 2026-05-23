@@ -17,8 +17,8 @@ import roomescape.dao.ThemeDao;
 import roomescape.domain.Reservation;
 import roomescape.domain.ReservationTime;
 import roomescape.domain.Theme;
-import roomescape.exception.DuplicateResourceException;
-import roomescape.exception.ResourceInUseException;
+import roomescape.service.exception.DuplicateResourceException;
+import roomescape.service.exception.ResourceInUseException;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)

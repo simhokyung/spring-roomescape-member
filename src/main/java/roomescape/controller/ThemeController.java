@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import roomescape.domain.Theme;
-import roomescape.dto.PopularThemeResponse;
-import roomescape.dto.ReservationTimeStatusResponse;
-import roomescape.dto.ThemeRequest;
-import roomescape.dto.ThemeResponse;
+import roomescape.controller.dto.PopularThemeResponse;
+import roomescape.controller.dto.ReservationTimeStatusResponse;
+import roomescape.controller.dto.ThemeRequest;
+import roomescape.controller.dto.ThemeResponse;
 import roomescape.service.ReservationTimeService;
 import roomescape.service.ThemeService;
 
@@ -55,11 +55,17 @@ public class ThemeController {
 
     @GetMapping("/themes/{themeId}/reservation-times")
     public List<ReservationTimeStatusResponse> read(@RequestParam LocalDate date, @PathVariable Long themeId) {
-        return reservationTimeService.findReservationTimeByDateAndThemeId(date, themeId);
+        return reservationTimeService.findReservationTimeByDateAndThemeId(date, themeId)
+                .stream()
+                .map(ReservationTimeStatusResponse::from)
+                .toList();
     }
 
     @GetMapping("/themes/popular")
     public List<PopularThemeResponse> readPopularThemes() {
-        return themeService.findPopularThemes();
+        return themeService.findPopularThemes()
+                .stream()
+                .map(PopularThemeResponse::from)
+                .toList();
     }
 }

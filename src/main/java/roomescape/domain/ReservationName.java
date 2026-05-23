@@ -1,6 +1,6 @@
 package roomescape.domain;
 
-import roomescape.exception.InvalidInputException;
+import roomescape.domain.exception.DomainValidationException;
 
 public class ReservationName {
     private static final int MIN_LENGTH = 2;
@@ -19,11 +19,11 @@ public class ReservationName {
 
     private void validate(String value) {
         if (value == null || value.isBlank()) {
-            throw new InvalidInputException("이름 형식은 " + MIN_LENGTH + "글자 이상 " + MAX_LENGTH + "글자 이하입니다.");
+            throw new DomainValidationException("이름 형식은 " + MIN_LENGTH + "글자 이상 " + MAX_LENGTH + "글자 이하입니다.");
         }
 
         if (value.length() < MIN_LENGTH || value.length() > MAX_LENGTH) {
-            throw new InvalidInputException("이름 형식은 " + MIN_LENGTH + "글자 이상 " + MAX_LENGTH + "글자 이하입니다.");
+            throw new DomainValidationException("이름 형식은 " + MIN_LENGTH + "글자 이상 " + MAX_LENGTH + "글자 이하입니다.");
         }
     }
 }

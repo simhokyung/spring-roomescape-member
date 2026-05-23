@@ -1,6 +1,7 @@
-package roomescape.exception;
+package roomescape.service.exception;
 
 import lombok.Getter;
+import roomescape.error.ErrorCode;
 
 @Getter
 public class DuplicateResourceException extends RuntimeException {

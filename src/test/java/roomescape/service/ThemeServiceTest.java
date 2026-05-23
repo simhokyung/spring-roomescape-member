@@ -7,7 +7,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import roomescape.dao.ReservationDao;
 import roomescape.domain.ReservationTime;
 import roomescape.domain.Theme;
-import roomescape.dto.ReservationTimeStatusResponse;
+import roomescape.service.dto.ReservationTimeStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -60,7 +60,7 @@ class ThemeServiceTest {
         reservationService.save("포비", targetDate, otherThemeTime.getId(), otherTheme.getId());
 
         assertThat(reservationTimeService.findReservationTimeByDateAndThemeId(targetDate, targetTheme.getId()))
-                .extracting(ReservationTimeStatusResponse::available)
+                .extracting(ReservationTimeStatus::available)
                 .containsExactlyInAnyOrder(true, true, false, false);
     }
 }

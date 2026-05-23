@@ -20,8 +20,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import roomescape.domain.Reservation;
 import roomescape.domain.ReservationTime;
 import roomescape.domain.Theme;
-import roomescape.exception.DuplicateResourceException;
-import roomescape.exception.PastReservationException;
+import roomescape.service.exception.DuplicateResourceException;
+import roomescape.domain.exception.PastReservationException;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)

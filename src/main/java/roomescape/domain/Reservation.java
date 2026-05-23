@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Getter;
-import roomescape.exception.InvalidInputException;
-import roomescape.exception.PastReservationException;
+import roomescape.domain.exception.DomainValidationException;
+import roomescape.domain.exception.PastReservationException;
 
 @Getter
 public class Reservation {
@@ -86,31 +86,31 @@ public class Reservation {
 
     private static void validateName(ReservationName name) {
         if (name == null) {
-            throw new InvalidInputException("예약자 이름은 필수입니다.");
+            throw new DomainValidationException("예약자 이름은 필수입니다.");
         }
     }
 
     private static void validateDate(LocalDate date) {
         if (date == null) {
-            throw new InvalidInputException("예약 날짜는 필수입니다.");
+            throw new DomainValidationException("예약 날짜는 필수입니다.");
         }
     }
 
     private static void validateTime(ReservationTime time) {
         if (time == null) {
-            throw new InvalidInputException("예약 시간은 필수입니다.");
+            throw new DomainValidationException("예약 시간은 필수입니다.");
         }
     }
 
     private static void validateTheme(Theme theme) {
         if (theme == null) {
-            throw new InvalidInputException("테마는 필수입니다.");
+            throw new DomainValidationException("테마는 필수입니다.");
         }
     }
 
     private static void validateNow(LocalDateTime now) {
         if (now == null) {
-            throw new InvalidInputException("현재 시각은 필수입니다.");
+            throw new DomainValidationException("현재 시각은 필수입니다.");
         }
     }
 }

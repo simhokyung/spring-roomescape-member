@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import roomescape.dao.ReservationDao;
 import roomescape.dao.ReservationTimeDao;
 import roomescape.domain.ReservationTime;
-import roomescape.dto.ReservationTimeStatusResponse;
-import roomescape.exception.DuplicateResourceException;
-import roomescape.exception.ErrorCode;
-import roomescape.exception.ResourceInUseException;
+import roomescape.service.dto.ReservationTimeStatus;
+import roomescape.service.exception.DuplicateResourceException;
+import roomescape.error.ErrorCode;
+import roomescape.service.exception.ResourceInUseException;
 
 @Service
 public class ReservationTimeService {
@@ -43,7 +43,7 @@ public class ReservationTimeService {
         reservationTimeDao.deleteById(id);
     }
 
-    public List<ReservationTimeStatusResponse> findReservationTimeByDateAndThemeId(LocalDate date, Long themeId) {
+    public List<ReservationTimeStatus> findReservationTimeByDateAndThemeId(LocalDate date, Long themeId) {
         List<ReservationTime> reservationTimes = reservationTimeDao.findAll();
         List<Long> timeIds = reservationDao.findReservedTimeIdsByDateAndThemeId(date, themeId);
 
@@ -52,7 +52,7 @@ public class ReservationTimeService {
                 .map(reservationTime -> {
                     boolean available = !timeIds.contains(reservationTime.getId())
                             && !reservationTime.isPast(date, now);
-                    return ReservationTimeStatusResponse.of(reservationTime, available);
+                    return new ReservationTimeStatus(reservationTime, available);
                 })
                 .toList();
     }

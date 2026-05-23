@@ -12,11 +12,11 @@ import roomescape.dao.ThemeDao;
 import roomescape.domain.Reservation;
 import roomescape.domain.ReservationTime;
 import roomescape.domain.Theme;
-import roomescape.exception.DuplicateResourceException;
-import roomescape.exception.ErrorCode;
-import roomescape.exception.InvalidInputException;
-import roomescape.exception.NotFoundException;
-import roomescape.exception.PastReservationException;
+import roomescape.service.exception.DuplicateResourceException;
+import roomescape.error.ErrorCode;
+import roomescape.domain.exception.DomainValidationException;
+import roomescape.service.exception.NotFoundException;
+import roomescape.domain.exception.PastReservationException;
 
 @Service
 public class ReservationService {
@@ -38,7 +38,7 @@ public class ReservationService {
             return reservationDao.findAll(page, size);
         }
         if (name.isBlank()) {
-            throw new InvalidInputException("예약자 이름은 필수입니다.");
+            throw new DomainValidationException("예약자 이름은 필수입니다.");
         }
         return reservationDao.findByName(name, page, size);
     }

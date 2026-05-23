@@ -1,10 +1,11 @@
-package roomescape.dto;
+package roomescape.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalTime;
 
 import roomescape.domain.ReservationTime;
+import roomescape.service.dto.ReservationTimeStatus;
 
 public record ReservationTimeStatusResponse(
         Long id,
@@ -14,12 +15,12 @@ public record ReservationTimeStatusResponse(
 
         boolean available) {
 
-    public static ReservationTimeStatusResponse of(ReservationTime reservationTime, boolean available) {
+    public static ReservationTimeStatusResponse from(ReservationTimeStatus status) {
 
         return new ReservationTimeStatusResponse(
-                reservationTime.getId(),
-                reservationTime.getStartAt(),
-                available
+                status.reservationTime().getId(),
+                status.reservationTime().getStartAt(),
+                status.available()
         );
     }
 }

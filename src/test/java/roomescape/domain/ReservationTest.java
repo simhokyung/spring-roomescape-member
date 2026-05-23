@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-import roomescape.exception.InvalidInputException;
+import roomescape.domain.exception.DomainValidationException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ class ReservationTest {
                 theme,
                 LocalDateTime.parse("2030-04-01T10:00:00")
         ))
-                .isInstanceOf(InvalidInputException.class)
+                .isInstanceOf(DomainValidationException.class)
                 .hasMessageContaining("이름 형식");
     }
 }

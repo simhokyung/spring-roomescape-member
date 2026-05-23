@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import roomescape.dao.ReservationDao;
 import roomescape.dao.ThemeDao;
 import roomescape.domain.Theme;
-import roomescape.dto.PopularThemeResponse;
-import roomescape.exception.DuplicateResourceException;
-import roomescape.exception.ErrorCode;
-import roomescape.exception.ResourceInUseException;
+import roomescape.service.dto.PopularThemeInfo;
+import roomescape.service.exception.DuplicateResourceException;
+import roomescape.error.ErrorCode;
+import roomescape.service.exception.ResourceInUseException;
 
 @Service
 public class ThemeService {
@@ -33,7 +33,7 @@ public class ThemeService {
         return themeDao.findAll();
     }
 
-    public List<PopularThemeResponse> findPopularThemes() {
+    public List<PopularThemeInfo> findPopularThemes() {
         LocalDate today = LocalDate.now(clock);
         return findPopularThemes(
                 today.minusDays(POPULAR_THEME_PERIOD_DAYS),
@@ -41,10 +41,10 @@ public class ThemeService {
                 POPULAR_THEME_LIMIT);
     }
 
-    public List<PopularThemeResponse> findPopularThemes(LocalDate startDate, LocalDate endDate, int limit) {
+    public List<PopularThemeInfo> findPopularThemes(LocalDate startDate, LocalDate endDate, int limit) {
         return themeDao.findPopularThemes(startDate, endDate, limit)
                 .stream()
-                .map(result -> PopularThemeResponse.of(
+                .map(result->new PopularThemeInfo(
                         result.theme(),
                         result.reservationCount()
                 ))

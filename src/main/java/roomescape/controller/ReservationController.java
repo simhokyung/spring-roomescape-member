@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import roomescape.domain.Reservation;
-import roomescape.dto.ReservationRequest;
-import roomescape.dto.ReservationResponse;
-import roomescape.dto.ReservationResponses;
-import roomescape.dto.ReservationUpdateRequest;
+import roomescape.controller.dto.ReservationRequest;
+import roomescape.controller.dto.ReservationResponse;
+import roomescape.controller.dto.ReservationResponses;
+import roomescape.controller.dto.ReservationUpdateRequest;
 import roomescape.service.ReservationService;
 
 @Validated

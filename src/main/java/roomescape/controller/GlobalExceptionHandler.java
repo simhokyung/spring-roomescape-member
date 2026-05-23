@@ -10,13 +10,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import roomescape.dto.ErrorResponse;
-import roomescape.exception.DuplicateResourceException;
-import roomescape.exception.ErrorCode;
-import roomescape.exception.InvalidInputException;
-import roomescape.exception.NotFoundException;
-import roomescape.exception.PastReservationException;
-import roomescape.exception.ResourceInUseException;
+import roomescape.controller.error.ErrorResponse;
+import roomescape.service.exception.DuplicateResourceException;
+import roomescape.error.ErrorCode;
+import roomescape.domain.exception.DomainValidationException;
+import roomescape.service.exception.NotFoundException;
+import roomescape.domain.exception.PastReservationException;
+import roomescape.service.exception.ResourceInUseException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -32,8 +32,8 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(InvalidInputException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidInputException(InvalidInputException e) {
+    @ExceptionHandler(DomainValidationException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidInputException(DomainValidationException e) {
         ErrorCode errorCode = ErrorCode.INVALID_INPUT;
 
         return ResponseEntity.status(errorCode.getHttpStatus())
