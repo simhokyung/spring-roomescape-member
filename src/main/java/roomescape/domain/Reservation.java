@@ -18,40 +18,38 @@ public class Reservation {
     private final ReservationTime time;
     private final Theme theme;
 
-    public Reservation(Long id, String name, LocalDate date, ReservationTime time, Theme theme) {
+    private Reservation(Long id, String name, LocalDate date, ReservationTime time, Theme theme) {
         validateRequired(name, date, time, theme);
 
         this.id = id;
-        this.theme = theme;
         this.name = name;
         this.date = date;
         this.time = time;
-    }
-
-    public Reservation(String name, LocalDate date, ReservationTime time, Theme theme) {
-        this(null, name, date, time, theme);
+        this.theme = theme;
     }
 
     public static Reservation create(String name, LocalDate date, ReservationTime time, Theme theme, LocalDateTime now) {
-        validateRequired(name, date, time, theme);
         validateNow(now);
-        validateCreatableDateTime(date, time, now);
 
-        return new Reservation(name, date, time, theme);
+        Reservation reservation = new Reservation(null, name, date, time, theme);
+        reservation.validateCreatableDateTime(now);
+        return reservation;
+    }
+
+    public static Reservation restore(Long id, String name, LocalDate date, ReservationTime time, Theme theme) {
+        return new Reservation(id, name, date, time, theme);
     }
 
     public Reservation updateDateAndTime(LocalDate date, ReservationTime time, LocalDateTime now) {
-        validateDate(date);
-        validateTime(time);
         validateNow(now);
 
         if (isPast(now)) {
             throw new PastReservationException("지난 예약은 변경할 수 없습니다.");
         }
 
-        validateUpdatableDateTime(date, time, now);
-
-        return new Reservation(id, name, date, time, theme);
+        Reservation updatedReservation = new Reservation(id, name, date, time, theme);
+        updatedReservation.validateUpdatableDateTime(now);
+        return updatedReservation;
     }
 
     public Long getTimeId() {
@@ -73,13 +71,13 @@ public class Reservation {
         validateTheme(theme);
     }
 
-    private static void validateCreatableDateTime(LocalDate date, ReservationTime time, LocalDateTime now) {
+    private void validateCreatableDateTime(LocalDateTime now) {
         if (time.isPast(date, now)) {
             throw new PastReservationException("지난 날짜 또는 시간은 예약할 수 없습니다.");
         }
     }
 
-    private static void validateUpdatableDateTime(LocalDate date, ReservationTime time, LocalDateTime now) {
+    private void validateUpdatableDateTime(LocalDateTime now) {
         if (time.isPast(date, now)) {
             throw new PastReservationException("지난 날짜 또는 시간으로 변경할 수 없습니다.");
         }

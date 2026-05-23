@@ -48,7 +48,7 @@ public class ReservationDao {
         int offset = page * size;
 
         return jdbcTemplate.query(sql,
-                (resultSet, rowNum) -> new Reservation(
+                (resultSet, rowNum) -> Reservation.restore(
                         resultSet.getLong("reservation_id"),
                         resultSet.getString("member_name"),
                         LocalDate.parse(resultSet.getString("date")),
@@ -92,7 +92,7 @@ public class ReservationDao {
         int offset = page * size;
 
         return jdbcTemplate.query(sql,
-                (resultSet, rowNum) -> new Reservation(
+                (resultSet, rowNum) -> Reservation.restore(
                         resultSet.getLong("reservation_id"),
                         resultSet.getString("member_name"),
                         LocalDate.parse(resultSet.getString("date")),
@@ -133,7 +133,7 @@ public class ReservationDao {
 
         List<Reservation> result = jdbcTemplate.query(
                 sql,
-                (resultSet, rowNum) -> new Reservation(
+                (resultSet, rowNum) -> Reservation.restore(
                         resultSet.getLong("reservation_id"),
                         resultSet.getString("member_name"),
                         LocalDate.parse(resultSet.getString("date")),
@@ -166,7 +166,7 @@ public class ReservationDao {
         }, keyHolder);
         Long id = Objects.requireNonNull(keyHolder.getKey()).longValue();
 
-        return new Reservation(id, reservation.getName(), reservation.getDate(), reservation.getTime(),
+        return Reservation.restore(id, reservation.getName(), reservation.getDate(), reservation.getTime(),
                 reservation.getTheme());
     }
 

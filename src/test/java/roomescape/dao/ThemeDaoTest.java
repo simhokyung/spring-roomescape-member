@@ -59,12 +59,12 @@ class ThemeDaoTest {
         LocalDate startDate = LocalDate.of(2030, 5, 1);
         LocalDate endDate = LocalDate.of(2030, 5, 7);
 
-        reservationDao.save(new Reservation("브라운", LocalDate.of(2030, 5, 1), time, theme1));
-        reservationDao.save(new Reservation("코니", LocalDate.of(2030, 5, 2), time, theme1));
-        reservationDao.save(new Reservation("포비", LocalDate.of(2030, 5, 3), time, theme2));
+        reservationDao.save(Reservation.restore(null, "브라운", LocalDate.of(2030, 5, 1), time, theme1));
+        reservationDao.save(Reservation.restore(null, "코니", LocalDate.of(2030, 5, 2), time, theme1));
+        reservationDao.save(Reservation.restore(null, "포비", LocalDate.of(2030, 5, 3), time, theme2));
 
-        reservationDao.save(new Reservation("루피", LocalDate.of(2030, 4, 30), time, theme3));
-        reservationDao.save(new Reservation("초코", LocalDate.of(2030, 5, 8), time, theme3));
+        reservationDao.save(Reservation.restore(null, "루피", LocalDate.of(2030, 4, 30), time, theme3));
+        reservationDao.save(Reservation.restore(null, "초코", LocalDate.of(2030, 5, 8), time, theme3));
 
         List<PopularThemeResult> popularThemes = themeDao.findPopularThemes(startDate, endDate, 10);
 
@@ -86,9 +86,9 @@ class ThemeDaoTest {
         LocalDate startDate = LocalDate.of(2030, 5, 1);
         LocalDate endDate = LocalDate.of(2030, 5, 7);
 
-        reservationDao.save(new Reservation("브라운", LocalDate.of(2030, 5, 1), time1, theme1));
-        reservationDao.save(new Reservation("코니", LocalDate.of(2030, 5, 2), time2, theme2));
-        reservationDao.save(new Reservation("포비", LocalDate.of(2030, 5, 3), time3, theme3));
+        reservationDao.save(Reservation.restore(null, "브라운", LocalDate.of(2030, 5, 1), time1, theme1));
+        reservationDao.save(Reservation.restore(null, "코니", LocalDate.of(2030, 5, 2), time2, theme2));
+        reservationDao.save(Reservation.restore(null, "포비", LocalDate.of(2030, 5, 3), time3, theme3));
 
         List<PopularThemeResult> popularThemes = themeDao.findPopularThemes(startDate, endDate, 2);
 

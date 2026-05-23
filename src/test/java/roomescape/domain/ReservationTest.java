@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import roomescape.exception.InvalidInputException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 class ReservationTest {
@@ -23,7 +24,13 @@ class ReservationTest {
         Theme theme = new Theme("공포", "무서움", "https://roomescape.com");
 
         //when & then
-        assertThatThrownBy(() -> new Reservation(name, LocalDate.parse("2030-04-10"), reservationTime, theme))
+        assertThatThrownBy(() -> Reservation.create(
+                name,
+                LocalDate.parse("2030-04-10"),
+                reservationTime,
+                theme,
+                LocalDateTime.parse("2030-04-01T10:00:00")
+        ))
                 .isInstanceOf(InvalidInputException.class)
                 .hasMessageContaining("이름 형식");
     }
