@@ -4,6 +4,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import roomescape.dao.ReservationDao;
@@ -42,8 +43,13 @@ public class ReservationService {
     }
 
     public void cancelById(long id) {
-        Reservation reservation = reservationDao.findById(id)
-                .orElseThrow(() -> new NotFoundException("존재하지 않는 예약입니다."));
+        Optional<Reservation> optionalReservation = reservationDao.findById(id);
+
+        if (optionalReservation.isEmpty()) {
+            return;
+        }
+
+        Reservation reservation = optionalReservation.get();
         LocalDateTime now = LocalDateTime.now(clock);
 
         if (reservation.isPast(now)) {

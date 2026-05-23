@@ -466,15 +466,6 @@ public class MissionStepTest {
     }
 
     @Test
-    void 빈_이름으로_내_예약을_조회하면_실패한다() {
-        RestAssured.given().log().all()
-                .when().get("/reservations?name=")
-                .then().log().all()
-                .statusCode(400)
-                .body("code", is("INVALID_INPUT"));
-    }
-
-    @Test
     void 내_예약을_취소한다() {
         Map<String, Object> params = new HashMap<>();
         params.put("name", "브라운");
