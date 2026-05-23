@@ -11,6 +11,7 @@ import roomescape.dao.ReservationTimeDao;
 import roomescape.domain.ReservationTime;
 import roomescape.dto.ReservationTimeStatusResponse;
 import roomescape.exception.DuplicateResourceException;
+import roomescape.exception.ErrorCode;
 import roomescape.exception.ResourceInUseException;
 
 @Service
@@ -32,10 +33,7 @@ public class ReservationTimeService {
 
     public ReservationTime save(ReservationTime reservationTime) {
         if (reservationTimeDao.existsByStartAt(reservationTime.getStartAt())) {
-            throw new DuplicateResourceException(
-                    "DUPLICATE_RESERVATION_TIME",
-                    "이미 존재하는 예약시간입니다."
-            );
+            throw new DuplicateResourceException(ErrorCode.DUPLICATE_RESERVATION_TIME);
         }
         return reservationTimeDao.save(reservationTime);
     }

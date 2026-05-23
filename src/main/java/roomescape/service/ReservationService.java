@@ -13,6 +13,7 @@ import roomescape.domain.Reservation;
 import roomescape.domain.ReservationTime;
 import roomescape.domain.Theme;
 import roomescape.exception.DuplicateResourceException;
+import roomescape.exception.ErrorCode;
 import roomescape.exception.InvalidInputException;
 import roomescape.exception.NotFoundException;
 import roomescape.exception.PastReservationException;
@@ -61,10 +62,7 @@ public class ReservationService {
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 테마입니다."));
 
         if (reservationDao.existByDateAndTimeAndThemeId(date, timeId, themeId)) {
-            throw new DuplicateResourceException(
-                    "DUPLICATE_RESERVATION",
-                    "이미 존재하는 예약입니다."
-            );
+            throw new DuplicateResourceException(ErrorCode.DUPLICATE_RESERVATION);
         }
 
         Reservation reservation = Reservation.create(
@@ -93,10 +91,7 @@ public class ReservationService {
                 updatedReservation.getTimeId(),
                 updatedReservation.getThemeId()
         )) {
-            throw new DuplicateResourceException(
-                    "DUPLICATE_RESERVATION",
-                    "이미 존재하는 예약입니다."
-            );
+            throw new DuplicateResourceException(ErrorCode.DUPLICATE_RESERVATION);
         }
 
         reservationDao.updateDateAndTime(

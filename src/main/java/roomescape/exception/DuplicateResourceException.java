@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class DuplicateResourceException extends RuntimeException {
-    private final String code;
+    private final ErrorCode errorCode;
 
-    public DuplicateResourceException(String code, String message) {
-        super(message);
-        this.code = code;
+    public DuplicateResourceException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 }

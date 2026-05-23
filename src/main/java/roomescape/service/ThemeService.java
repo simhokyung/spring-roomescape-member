@@ -10,6 +10,7 @@ import roomescape.dao.ThemeDao;
 import roomescape.domain.Theme;
 import roomescape.dto.PopularThemeResponse;
 import roomescape.exception.DuplicateResourceException;
+import roomescape.exception.ErrorCode;
 import roomescape.exception.ResourceInUseException;
 
 @Service
@@ -52,10 +53,7 @@ public class ThemeService {
 
     public Theme save(Theme theme) {
         if (themeDao.existsByName(theme.getName())) {
-            throw new DuplicateResourceException(
-                    "DUPLICATE_THEME",
-                    "이미 존재하는 테마 이름입니다."
-            );
+            throw new DuplicateResourceException(ErrorCode.DUPLICATE_THEME);
         }
         return themeDao.save(theme);
     }
