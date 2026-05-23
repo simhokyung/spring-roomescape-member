@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(new ErrorResponse(
                         errorCode.name(),
-                        errorCode.getMessage())
+                        errorCode.getDefaultMessage())
                 );
     }
 
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.NOT_FOUND;
 
         return ResponseEntity.status(errorCode.getHttpStatus())
-                .body(new ErrorResponse(errorCode.name(), errorCode.getMessage()));
+                .body(new ErrorResponse(errorCode.name(), errorCode.getDefaultMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
                 .stream()
                 .findFirst()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .orElse(errorCode.getMessage());
+                .orElse(errorCode.getDefaultMessage());
 
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(new ErrorResponse(errorCode.name(), message));
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
                 .stream()
                 .findFirst()
                 .map(ConstraintViolation::getMessage)
-                .orElse(errorCode.getMessage());
+                .orElse(errorCode.getDefaultMessage());
 
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(new ErrorResponse(errorCode.name(), message));
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(new ErrorResponse(
                         errorCode.name(),
-                        e.getName() + errorCode.getMessage()
+                        e.getName() + errorCode.getDefaultMessage()
                 ));
     }
 
@@ -116,7 +116,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(new ErrorResponse(
                         errorCode.name(),
-                        errorCode.getMessage()
+                        errorCode.getDefaultMessage()
                 ));
     }
 
@@ -138,7 +138,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(new ErrorResponse(
                         errorCode.name(),
-                        errorCode.getMessage()
+                        errorCode.getDefaultMessage()
                 ));
     }
 }
